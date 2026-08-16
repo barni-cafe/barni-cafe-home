@@ -21,28 +21,28 @@
     header {
       background: #3b2a20;
       color: white;
-      padding: 22px;
+      padding: 25px 20px;
       text-align: center;
     }
 
     header h1 {
       font-size: 32px;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
     }
 
     header p {
-      margin-top: 6px;
-      opacity: 0.8;
+      margin-top: 8px;
+      opacity: 0.85;
     }
 
     .hero {
-      padding: 45px 20px;
       text-align: center;
+      padding: 45px 20px 30px;
     }
 
     .hero h2 {
       font-size: 30px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .hero p {
@@ -50,66 +50,110 @@
       margin-bottom: 25px;
     }
 
-    .btn {
-      display: inline-block;
-      background: #3b2a20;
-      color: white;
-      padding: 13px 28px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-size: 16px;
-    }
-
     .menu {
-      padding: 20px;
-      max-width: 900px;
+      max-width: 950px;
       margin: auto;
+      padding: 20px;
     }
 
-    .menu h2 {
+    .menu-title {
       text-align: center;
+      font-size: 26px;
       margin-bottom: 25px;
     }
 
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 20px;
     }
 
     .product {
       background: white;
-      border-radius: 18px;
-      padding: 20px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 190px;
+      background: #eee5da;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 70px;
+    }
+
+    .product-info {
+      padding: 18px;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     }
 
-    .product .emoji {
-      font-size: 55px;
-      margin-bottom: 12px;
-    }
-
-    .product h3 {
+    .product-info h3 {
       margin-bottom: 8px;
+      font-size: 20px;
     }
 
-    .product p {
-      color: #8a7b70;
+    .product-info p {
+      color: #87776b;
+      font-size: 14px;
       margin-bottom: 12px;
     }
 
     .price {
       font-weight: bold;
+      font-size: 17px;
+      margin-bottom: 15px;
+    }
+
+    .add-btn {
+      border: none;
+      background: #3b2a20;
+      color: white;
+      padding: 11px 22px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .add-btn:hover {
+      opacity: 0.9;
+    }
+
+    .cart {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      max-width: 500px;
+      margin: auto;
+      background: #3b2a20;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .cart button {
+      border: none;
+      background: white;
       color: #3b2a20;
+      padding: 9px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
     footer {
-      margin-top: 45px;
+      margin-top: 80px;
       padding: 25px;
+      text-align: center;
       background: #3b2a20;
       color: white;
-      text-align: center;
     }
   </style>
 </head>
@@ -124,41 +168,97 @@
   <section class="hero">
     <h2>مرحبًا بك في برني ☕</h2>
     <p>اختر طلبك واستمتع بتجربة Barni Café</p>
-    <a href="#menu" class="btn">شوف المنيو</a>
   </section>
 
-  <section class="menu" id="menu">
-    <h2>المنيو</h2>
+  <section class="menu">
+    <h2 class="menu-title">المنيو</h2>
 
     <div class="products">
 
       <div class="product">
-        <div class="emoji">☕</div>
-        <h3>قهوة عربية</h3>
-        <p>قهوة عربية بطابع برني</p>
-        <div class="price">0.500 ر.ع</div>
+        <div class="product-image">☕</div>
+
+        <div class="product-info">
+          <h3>قهوة عربية</h3>
+          <p>قهوة عربية بطابع برني</p>
+          <div class="price">0.500 ر.ع</div>
+          <button class="add-btn" onclick="addToCart('قهوة عربية', 0.500)">
+            أضف للطلب
+          </button>
+        </div>
       </div>
 
       <div class="product">
-        <div class="emoji">🥜</div>
-        <h3>مكسرات</h3>
-        <p>مكسرات مشكلة</p>
-        <div class="price">1.000 ر.ع</div>
+        <div class="product-image">🥜</div>
+
+        <div class="product-info">
+          <h3>مكسرات مشكلة</h3>
+          <p>تشكيلة من المكسرات اللذيذة</p>
+          <div class="price">1.000 ر.ع</div>
+          <button class="add-btn" onclick="addToCart('مكسرات مشكلة', 1.000)">
+            أضف للطلب
+          </button>
+        </div>
       </div>
 
       <div class="product">
-        <div class="emoji">🍪</div>
-        <h3>سناك</h3>
-        <p>اختيار خفيف ولذيذ</p>
-        <div class="price">1.000 ر.ع</div>
+        <div class="product-image">🍪</div>
+
+        <div class="product-info">
+          <h3>سناك</h3>
+          <p>اختيار خفيف ولذيذ</p>
+          <div class="price">1.000 ر.ع</div>
+          <button class="add-btn" onclick="addToCart('سناك', 1.000)">
+            أضف للطلب
+          </button>
+        </div>
       </div>
 
     </div>
   </section>
 
+  <div class="cart">
+    <span>🛒 الطلب: <strong id="cartCount">0</strong></span>
+    <button onclick="showCart()">عرض الطلب</button>
+  </div>
+
   <footer>
-    <p>© 2026 Barni Café</p>
+    <p>© 2026 BARNI CAFÉ</p>
   </footer>
+
+  <script>
+    let cart = [];
+
+    function addToCart(name, price) {
+      cart.push({
+        name: name,
+        price: price
+      });
+
+      document.getElementById("cartCount").textContent = cart.length;
+
+      alert("تمت إضافة " + name + " إلى الطلب ☕");
+    }
+
+    function showCart() {
+      if (cart.length === 0) {
+        alert("الطلب فارغ 🤎");
+        return;
+      }
+
+      let message = "طلبك:\n\n";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        message += (index + 1) + ". " + item.name + " - " + item.price.toFixed(3) + " ر.ع\n";
+        total += item.price;
+      });
+
+      message += "\nالإجمالي: " + total.toFixed(3) + " ر.ع";
+
+      alert(message);
+    }
+  </script>
 
 </body>
 </html>
