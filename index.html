@@ -1,11 +1,166 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>برني | Barni Home</title><link rel="stylesheet" href="style.css"></head><body>
-<header class="site-header"><button class="icon-btn" id="backBtn">←</button><div class="brand-mini">برني</div><button class="cart-btn" id="openCart">السلة <b id="cartCount">0</b></button></header>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#17100c">
+  <title>برني | Barni Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div class="splash" id="splash" aria-label="برني">
+  <div class="splash-logo">برني</div>
+</div>
+
+<header class="topbar">
+  <a class="brand" id="headerBrand" href="#home">برني</a>
+  <nav>
+    <a href="#home">الرئيسية</a>
+    <a href="#menu">المنتجات</a>
+    <a href="#track">تتبع الطلب</a>
+  </nav>
+  <button class="icon-btn" id="openCart">🛒 السلة <span id="cartBadge">0</span></button>
+</header>
+
 <main>
-<section id="homePage" class="page active"><div class="hero"><div class="hero-copy"><span class="eyebrow">BARNI HOME</span><h1>برني<br><span>من البيت، بحب.</span></h1><p>قهوة ومقرمشات مختارة بعناية، بطابع برني الدافئ.</p><button class="primary-btn" id="shopNow">تصفح المنتجات</button></div><div class="hero-image"><img src="arabic-coffee.jpg" alt="قهوة عربية"></div></div><div class="home-cards"><button class="home-card" data-go="productsPage"><span class="card-icon">01</span><span><strong>المنتجات</strong><small>اختيارات برني</small></span><b>←</b></button><button class="home-card" data-go="trackPage"><span class="card-icon">02</span><span><strong>تتبع الطلب</strong><small>تابع طلبك بسهولة</small></span><b>←</b></button></div></section>
-<section id="productsPage" class="page"><div class="page-head"><span class="eyebrow">BARNI HOME</span><h2>المنتجات</h2><p>اختَر اللي يعجبك، والباقي علينا.</p></div><div id="categories" class="categories"></div><div id="products" class="products"></div></section>
-<section id="detailPage" class="page"><div id="detail"></div></section>
-<section id="trackPage" class="page"><div class="page-head"><span class="eyebrow">ORDER TRACKING</span><h2>تتبع الطلب</h2><p>أدخل رقم طلبك لمعرفة حالته.</p></div><form id="trackForm" class="simple-form"><label>رقم الطلب<input id="trackNumber" placeholder="مثال: BRN-123456" required></label><button class="primary-btn">تتبع الطلب</button></form><div id="trackResult"></div></section>
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <p class="eyebrow">BARNI HOME</p>
+      <h1>برني، <span>من البيت.</span></h1>
+      <p class="hero-copy">منتجات مختارة بعناية، بطابع برني الدافئ. اختر طلبك، أضفه للسلة، وخله جاهز لك.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#menu">شوف المنتجات</a>
+        <a class="btn ghost" href="#track">تتبع طلبك</a>
+      </div>
+      <div class="trust-row">
+        <span>✦ منتجات مختارة</span>
+        <span>⌁ طلب سريع</span>
+        <span>♡ من البيت</span>
+      </div>
+    </div>
+
+    <div class="hero-photo">
+      <img src="home.jpg" alt="قهوة برني">
+      <div class="hero-photo-label">
+        <small>اختيار برني</small>
+        <strong>قهوة ومقرمشات<br>على هلك.</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="menu">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">BARNI HOME</p>
+        <h2>المنتجات</h2>
+        <p>اختر طلبك وأضفه للسلة.</p>
+      </div>
+      <div class="search-wrap">
+        <input id="search" type="search" placeholder="ابحث عن منتج..." autocomplete="off">
+      </div>
+    </div>
+
+    <div class="chips" id="categories"></div>
+    <div class="product-grid" id="products"></div>
+  </section>
+
+  <section class="section detail-section" id="details">
+    <div id="detailCard" class="detail-card">
+      <div class="detail-placeholder">
+        <p class="eyebrow">PRODUCT DETAILS</p>
+        <h2>تفاصيل المنتج</h2>
+        <p>اختر منتجًا من القائمة لعرض تفاصيله هنا.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section track-section" id="track">
+    <div class="track-card">
+      <p class="eyebrow">ORDER TRACKING</p>
+      <h2>تتبع طلبك</h2>
+      <p class="muted">أدخل رقم الطلب لمعرفة آخر حالة.</p>
+      <form class="track-form" id="trackForm">
+        <input id="trackOrder" placeholder="رقم الطلب" autocomplete="off">
+        <button class="btn primary" type="submit">تتبع الطلب</button>
+      </form>
+      <div id="trackResult"></div>
+    </div>
+  </section>
 </main>
-<aside id="cartDrawer" class="drawer"><div class="drawer-panel"><div class="drawer-head"><div><span class="eyebrow">BARNI HOME</span><h3>السلة</h3></div><button class="close-btn" id="closeCart">×</button></div><div id="cartItems"></div><div class="cart-footer"><div class="total-line"><span>الإجمالي</span><strong id="cartTotal">0.000 ر.ع</strong></div><button class="primary-btn" id="checkoutBtn">إتمام الطلب</button><button class="ghost-btn" id="clearCart">تفريغ السلة</button></div></div></aside>
-<div id="checkoutModal" class="modal" hidden><div class="modal-card"><div class="drawer-head"><div><span class="eyebrow">CHECKOUT</span><h3>إتمام الطلب</h3></div><button class="close-btn" data-close="checkoutModal">×</button></div><form id="checkoutForm" class="simple-form"><label>اسمك<input id="customerName" required placeholder="اكتب اسمك"></label><label>الملاحظات<textarea id="notes" rows="4" placeholder="أي ملاحظات على الطلب؟"></textarea></label><div class="total-line"><span>الإجمالي</span><strong id="checkoutTotal">0.000 ر.ع</strong></div><button class="primary-btn" id="submitOrder">تأكيد الطلب</button></form></div></div>
-<div id="successModal" class="modal" hidden><div class="modal-card success-card"><div class="success-mark">✓</div><span class="eyebrow">ORDER CONFIRMED</span><h2>تم استلام طلبك</h2><p>رقم طلبك</p><strong id="successNumber" class="order-number"></strong><p id="successMeta"></p><button class="primary-btn" id="successTrack">تتبع الطلب</button><button class="ghost-btn" data-close="successModal">إغلاق</button></div></div><div id="toast" class="toast"></div><script src="app.js"></script></body></html>
+
+<footer>
+  <strong>BARNI HOME</strong>
+  <span>كل ثانية لها قيمة</span>
+</footer>
+
+<div class="drawer" id="cartDrawer" hidden>
+  <div class="drawer-backdrop" data-close-cart></div>
+  <aside class="drawer-panel">
+    <div class="drawer-head">
+      <div>
+        <p class="eyebrow">YOUR ORDER</p>
+        <h3>السلة</h3>
+      </div>
+      <button class="close-btn" type="button" data-close-cart>×</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-total">
+      <span>المجموع</span>
+      <strong id="cartTotal">0.000 ر.ع</strong>
+    </div>
+    <button class="btn primary full" id="checkoutBtn">إتمام الطلب</button>
+    <button class="text-btn" id="clearCart">تفريغ السلة</button>
+  </aside>
+</div>
+
+<div class="modal" id="checkoutModal" hidden>
+  <div class="modal-backdrop" data-close-checkout></div>
+  <div class="modal-card">
+    <button class="close-btn modal-close" data-close-checkout>×</button>
+    <p class="eyebrow">CHECKOUT</p>
+    <h2>إتمام الطلب</h2>
+    <p class="muted">من البيت فقط. الاسم والملاحظات، والباقي علينا.</p>
+
+    <form id="checkoutForm">
+      <div class="form-grid">
+        <label>
+          اسمك
+          <input id="customerName" required autocomplete="name" placeholder="اكتب اسمك">
+        </label>
+        <label class="wide">
+          الملاحظات
+          <textarea id="notes" rows="4" placeholder="أي ملاحظة على الطلب؟"></textarea>
+        </label>
+      </div>
+
+      <div class="checkout-summary">
+        <span>الإجمالي</span>
+        <strong id="checkoutTotal">0.000 ر.ع</strong>
+      </div>
+      <button class="btn primary full" id="submitOrder" type="submit">تأكيد وإرسال الطلب</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="successModal" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-card success-card">
+    <div class="success-icon">✓</div>
+    <p class="eyebrow">ORDER RECEIVED</p>
+    <h2>تم استلام طلبك</h2>
+    <p class="muted">احتفظ برقم الطلب عشان تقدر تتابعه.</p>
+    <div class="order-number" id="successNumber">BRN-000000</div>
+    <div class="success-meta" id="successMeta">طلب من البيت</div>
+    <button class="btn primary full" id="goTrack">تتبع الطلب</button>
+    <button class="btn ghost full" id="closeSuccess">العودة للمنتجات</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
