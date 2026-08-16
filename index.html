@@ -992,20 +992,19 @@ id="brandSubtitle"
 
 <div class="home-options">
 
-
 <button
 class="mode-button"
-onclick="startOrder('cafe')"
+onclick="startOrder()"
 >
 
 <div class="mode-text">
 
 <h2 id="insideTitle">
-داخل المقهى
+اطلب من البيت
 </h2>
 
 <p id="insideText">
-اطلب واستمتع بجلستك
+اختر طلبك واستلمه
 </p>
 
 </div>
@@ -1016,33 +1015,7 @@ onclick="startOrder('cafe')"
 
 </button>
 
-
-<button
-class="mode-button"
-onclick="startOrder('car')"
->
-
-<div class="mode-text">
-
-<h2 id="carTitle">
-من السيارة
-</h2>
-
-<p id="carText">
-اطلب واستلم طلبك من السيارة
-</p>
-
 </div>
-
-<div class="mode-icon">
-🚗
-</div>
-
-</button>
-
-
-</div>
-
 
 <div class="footer">
 BARnI CAFE
@@ -1051,7 +1024,6 @@ BARnI CAFE
 </div>
 
 </section>
-
 
 
 <!-- =========================
@@ -1130,7 +1102,6 @@ id="products"
 </section>
 
 
-
 <!-- =========================
 CART
 ========================= -->
@@ -1191,7 +1162,6 @@ onclick="goToOrderForm()"
 </div>
 
 
-
 <!-- =========================
 ORDER FORM
 ========================= -->
@@ -1224,92 +1194,7 @@ onclick="showPage('menuPage')"
 <div class="form-title">
 بيانات الطلب
 </div>
-
-
-<div
-id="cafeField"
-class="field"
->
-
-<label>
-رقم الطاولة <span class="required">*</span>
-</label>
-
-<input
-id="tableNumber"
-type="text"
-inputmode="numeric"
-placeholder="مثال: 12"
->
-
-</div>
-
-
-<div
-id="carField"
-class="field hidden"
->
-
-<label>
-وصف السيارة <span class="required">*</span>
-</label>
-
-<input
-id="vehicleDescription"
-type="text"
-placeholder="مثال: لاندكروزر أبيض"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-رقم الهاتف <span class="required">*</span>
-</label>
-
-<input
-id="phone"
-type="tel"
-inputmode="tel"
-placeholder="مثال: 91234567"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-الملاحظات
-</label>
-
-<textarea
-id="notes"
-placeholder="أي ملاحظات على الطلب..."
-></textarea>
-
-</div>
-
-
-<button
-class="primary submit"
-id="submitButton"
-onclick="submitOrder()"
->
-
-تأكيد الطلب ✓
-
-</button>
-
-
-<div id="formError"></div>
-
-</div>
-
 </section>
-
 
 
 <!-- =========================
@@ -1411,7 +1296,6 @@ onclick="goHome()"
 </div>
 
 </section>
-
 
 
 <!-- =========================
@@ -1535,7 +1419,6 @@ data-status="delivered"
 </div>
 
 </section>
-
 
 
 <script>
@@ -1693,7 +1576,6 @@ const categories = [
 
 let cart = [];
 
-let orderMode = "cafe";
 
 let currentCategory = "all";
 
@@ -1812,9 +1694,7 @@ async function ensureAuth(){
    START ORDER
 ========================= */
 
-function startOrder(mode){
-
-    orderMode = mode;
+function startOrder(){
 
     cart = [];
 
@@ -1826,26 +1706,8 @@ function startOrder(mode){
 
     renderProducts();
 
-
-    document
-        .getElementById("cafeField")
-        .classList.toggle(
-            "hidden",
-            mode !== "cafe"
-        );
-
-
-    document
-        .getElementById("carField")
-        .classList.toggle(
-            "hidden",
-            mode !== "car"
-        );
-
-
     document.getElementById("formError")
         .innerHTML = "";
-
 
     showPage("menuPage");
 
@@ -1884,29 +1746,15 @@ function toggleLanguage(){
     document.getElementById("insideTitle")
         .textContent =
         english
-        ? "Inside Cafe"
-        : "داخل المقهى";
+        ? "Order from Home"
+        : "اطلب من البيت";
 
 
     document.getElementById("insideText")
         .textContent =
         english
-        ? "Order and enjoy your seat"
-        : "اطلب واستمتع بجلستك";
-
-
-    document.getElementById("carTitle")
-        .textContent =
-        english
-        ? "Drive Thru"
-        : "من السيارة";
-
-
-    document.getElementById("carText")
-        .textContent =
-        english
-        ? "Order and collect from your car"
-        : "اطلب واستلم طلبك من السيارة";
+        ? "Choose your order and collect it"
+        : "اختر طلبك واستلمه";
 
 
     document.getElementById("menuTitle")
@@ -2319,17 +2167,10 @@ async function submitOrder(){
     const button =
         document.getElementById("submitButton");
 
-
     const errorBox =
         document.getElementById("formError");
 
-
-    /*
-       نمسح أي خطأ قديم.
-    */
-
     errorBox.innerHTML = "";
-
 
     if(cart.length === 0){
 
@@ -2340,33 +2181,17 @@ async function submitOrder(){
         `;
 
         return;
-
     }
-
 
     const phone =
         document.getElementById("phone")
         .value
         .trim();
 
-
     const notes =
         document.getElementById("notes")
         .value
         .trim();
-
-
-    const tableNumber =
-        document.getElementById("tableNumber")
-        .value
-        .trim();
-
-
-    const vehicle =
-        document.getElementById("vehicleDescription")
-        .value
-        .trim();
-
 
     if(!phone){
 
@@ -2377,106 +2202,31 @@ async function submitOrder(){
         `;
 
         return;
-
     }
-
-
-    if(
-        orderMode === "cafe"
-        &&
-        !tableNumber
-    ){
-
-        errorBox.innerHTML = `
-            <div class="error">
-                أدخل رقم الطاولة
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    if(
-        orderMode === "car"
-        &&
-        !vehicle
-    ){
-
-        errorBox.innerHTML = `
-            <div class="error">
-                اكتب وصف السيارة
-            </div>
-        `;
-
-        return;
-
-    }
-
 
     button.disabled = true;
-
-    button.textContent =
-        "جاري إرسال الطلب...";
-
+    button.textContent = "جاري إرسال الطلب...";
 
     try{
-
-        /*
-           إنشاء جلسة العميل
-        */
 
         const session =
             await ensureAuth();
 
-
-        /*
-           رقم طلب جديد
-        */
-
         const orderNumber =
             generateOrderNumber();
 
-
-        /*
-           تجهيز المنتجات
-        */
-
         const orderItems =
             cart.map(item => ({
-
                 id:item.id,
-
                 name:item.name,
-
                 name_en:item.en,
-
                 qty:item.qty,
-
                 price:item.price
-
             }));
-
-
-        /*
-           بيانات الطلب
-        */
 
         const payload = {
 
             order_number:orderNumber,
-
-   
-
-            table_number:
-                orderMode === "cafe"
-                ? tableNumber
-                : null,
-           
-                orderMode === "car"
-                ? vehicle
-                : null,
 
             phone:phone,
 
@@ -2495,11 +2245,6 @@ async function submitOrder(){
 
         };
 
-
-        /*
-           إرسال الطلب إلى Supabase
-        */
-
         const {
             data,
             error
@@ -2510,13 +2255,7 @@ async function submitOrder(){
         .select()
         .single();
 
-
         if(error){
-
-            /*
-               نرمي الخطأ الحقيقي
-               بدل الانتقال لصفحة التأكيد.
-            */
 
             console.error(
                 "SUPABASE ERROR:",
@@ -2524,40 +2263,17 @@ async function submitOrder(){
             );
 
             throw error;
-
         }
-
-
-        /*
-           فقط إذا نجح الحفظ فعلًا
-           ننتقل إلى التأكيد.
-        */
 
         currentOrder = data;
 
-
-        /*
-           نمسح الخطأ
-        */
-
         errorBox.innerHTML = "";
-
-
-        /*
-           نمسح السلة
-        */
 
         cart = [];
 
         updateCartCount();
 
-
-        /*
-           عرض صفحة التأكيد فقط
-        */
-
         showConfirmation(data);
-
 
     }catch(error){
 
@@ -2566,31 +2282,17 @@ async function submitOrder(){
             error
         );
 
-
-        /*
-           نبقى في صفحة بيانات الطلب.
-           لا نعرض صفحة التأكيد.
-        */
-
         showPage("formPage");
 
-
         errorBox.innerHTML = `
-
             <div class="error">
-
                 حدث خطأ أثناء إرسال الطلب.
                 تأكد من اتصال الإنترنت وحاول مرة أخرى.
-
             </div>
-
         `;
 
-
         button.disabled = false;
-
-        button.textContent =
-            "تأكيد الطلب ✓";
+        button.textContent = "تأكيد الطلب ✓";
 
     }
 
@@ -2646,17 +2348,9 @@ function showConfirmation(order){
 
     document.getElementById(
         "confirmedLocation"
-    )
-    .textContent =
+    ).textContent = "من البيت";
 
-        order.order_type === "cafe"
-
-        ? "طاولة " + order.table_number
-
-        : order.vehicle_description;
-
-
-    /*
+/*
        الهاتف
     */
 
